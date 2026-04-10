@@ -1,136 +1,89 @@
-#  Customer Segmentation using K-Means Clustering
+# Customer Segmentation using K-Means Clustering
 
-##  Project Overview
-This project focuses on **customer segmentation** using the **K-Means clustering algorithm** to identify distinct customer groups based on their purchasing behavior.  
+## Project Overview
+This project focuses on **customer segmentation** using the **K-Means clustering algorithm** to identify distinct customer groups based on their purchasing behavior.
+
 By analyzing customer income and spending patterns, the project provides **actionable business insights** that can help organizations improve marketing strategies and customer targeting.
 
 The dataset used is the **Mall Customers Dataset**, a widely used dataset for clustering and customer analytics tasks.
 
 ---
 
-##  Objective
-The main objective of this project is to:
+## Objective
 - Segment customers into meaningful groups using unsupervised learning
 - Understand customer behavior patterns
 - Support data-driven business decisions and targeted marketing strategies
 
 ---
 
-##  Dataset Information
-**Source:** Kaggle – Mall Customers Dataset  
-**Link:** https://www.kaggle.com/datasets/abdallahwagih/mall-customers-segmentation
-
-**Key Features Used:**
-- `Age`
-- `Annual Income (k$)`
-- `Spending Score (1–100)`
-
-These features help identify purchasing behavior and income-based segmentation.
+## Dataset
+- **Source:** Mall Customers Dataset
+- **Size:** 200 rows × 5 columns
+- **Features:** CustomerID, Gender, Age, Annual Income (k$), Spending Score (1-100)
+- **Link:** https://www.kaggle.com/datasets/abdallahwagih/mall-customers-segmentation
 
 ---
 
-##  Project Workflow
+## Methodology
 
-### 1️⃣ Data Exploration & Cleaning
-- Loaded and inspected the dataset
-- Checked for missing or null values
-- Verified data types and consistency
-- Selected relevant features for clustering
+### 1. Exploratory Data Analysis (EDA)
+- Checked for missing values, data types, and statistical summaries
+- Visualized gender distribution, feature distributions, and correlation heatmap
+- Key finding: No strong correlations between features — validates clustering approach
 
----
+### 2. Feature Selection
+| Feature | Included | Reason |
+|---|---|---|
+| Annual Income (k$) | ✅ Yes | Directly represents purchasing power |
+| Spending Score (1-100) | ✅ Yes | Directly represents spending behavior |
+| Age | ❌ No | Reduces Silhouette Score (0.55 → 0.43) |
+| Gender | ❌ No | Binary encoding distorts Euclidean distance |
 
-### 2️⃣ Exploratory Data Analysis (EDA)
-- Analyzed relationships between income, age, and spending score
-- Observed customer distribution patterns
-- Identified potential clustering tendencies visually
+### 3. Optimal K Selection
+Both methods independently confirmed **K = 5**:
+- **Elbow Method** — Clear elbow at K=5
+- **Silhouette Score** — Highest score of **0.5547** at K=5
 
----
-
-### 3️⃣ Feature Scaling
-- Applied **StandardScaler** to normalize numerical features
-- Ensured equal contribution of all features during distance calculations
-
----
-
-### 4️⃣ Choosing Optimal Number of Clusters
-- Used the **Elbow Method** to determine the optimal value of `K`
-- Evaluated clustering quality using the **Silhouette Score**
-
-**Silhouette Score Obtained:** `0.5547`  
-This indicates good cluster separation and reliable grouping.
+### 4. Model
+- Algorithm: K-Means Clustering
+- Features: Annual Income, Spending Score
+- Preprocessing: StandardScaler
+- Final K: 5
 
 ---
 
-### 5️⃣ K-Means Clustering
-- Applied K-Means algorithm with the optimal number of clusters
-- Assigned cluster labels to each customer
-- Visualized the clusters for better interpretability
-- Customer Segmentation Visualization
+## Results
 
-![Customer Segmentation using K-Means](images/kmeans_clusters.png)
+| Cluster | Segment | Avg Income | Avg Spending | Count |
+|---|---|---|---|---|
+| 0 | Average Customers | Medium (55k$) | Medium (50) | 81 |
+| 1 | High Value | High (87k$) | High (82) | 39 |
+| 2 | Young Impulsive Spenders | Low (26k$) | High (79) | 22 |
+| 3 | Conservative High Earners | High (88k$) | Low (17) | 35 |
+| 4 | Budget Customers | Low (26k$) | Low (21) | 23 |
 
-
-
----
-
-## 📊 Cluster Interpretation & Business Insights
-
-### 🔵 Cluster 0 – High Income, High Spending
-- Premium customers with strong purchasing power  
-- **Strategy:** Loyalty programs, premium services, exclusive offers  
-
-### 🟣 Cluster 1 – Average Income, Average Spending
-- Stable and consistent customer base  
-- **Strategy:** Personalized promotions and seasonal offers  
-
-### 🟡 Cluster 2 – Low Income, Low Spending
-- Price-sensitive customers  
-- **Strategy:** Budget-friendly products and discounts  
-
-### 🟢 Cluster 3 – High Income, Low Spending
-- Financially capable but cautious spenders  
-- **Strategy:** Targeted promotions and value-based messaging  
-
-### 🔵 Cluster 4 – Low Income, High Spending
-- Impulsive or trend-driven buyers  
-- **Strategy:** Limited-time offers and controlled marketing campaigns  
+**Silhouette Score: 0.5547** — indicates well-separated, meaningful clusters.
 
 ---
 
-##  Key Insights
-- K-Means clustering effectively segments customers into meaningful groups.
-- Clear behavioral differences exist across income and spending patterns.
-- The model supports strategic marketing and customer retention decisions.
-
----
-## 📈 Model Evaluation (Silhouette Score)
-
-![Silhouette Score Output](images/silhouette_score.png)
-
-In this project, the silhouette score confirms that the selected number of clusters
-provides a good balance between cluster compactness and separation.
-
-
-##  Tools & Technologies Used
-- **Python**
-- **Pandas, NumPy**
-- **Matplotlib, Seaborn**
-- **Scikit-learn**
-- **Google Colab**
+## Business Insights
+- **Cluster 0** (Average): Loyalty programs and seasonal promotions
+- **Cluster 1** (High Value): Premium memberships and retention strategies
+- **Cluster 2** (Young Spenders): Limited-time offers and instalment options
+- **Cluster 3** (Conservative): Personalized discounts to unlock spending potential
+- **Cluster 4** (Budget): Budget-friendly products and value deals
 
 ---
 
-##  Future Enhancements
-- Include demographic attributes such as gender and age groups
-- Apply advanced clustering techniques (DBSCAN, Hierarchical Clustering)
-- Build an interactive dashboard for real-time insights
+## Tech Stack
+- Python
+- Pandas, NumPy
+- Matplotlib, Seaborn
+- Scikit-learn (KMeans, StandardScaler, silhouette_score)
 
 ---
-## Conclusion
 
-This project successfully applied K-Means clustering to segment customers based on their income and spending behavior. By using proper data preprocessing, feature scaling, and model evaluation techniques, meaningful customer groups were identified.
-
-The analysis demonstrated how unsupervised learning can uncover hidden patterns in customer data and support data-driven marketing decisions. Overall, the project highlights the practical application of machine learning for customer segmentation and provides a strong foundation for further business analytics and optimization.
-
-
----
+## How to Run
+1. Clone the repository
+2. Upload `Mall_Customers.csv` when prompted (Google Colab)
+3. Run all cells in `customer_segmentation.ipynb`
